@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyScrapper", "CatBoyScrapper\CatBoyScrapper.csproj", "{717148BC-ED08-4A11-B369-410B21937921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyCommon", "CatBoyCommon\CatBoyCommon.csproj", "{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyFinder", "CatBoyFinder\CatBoyFinder.csproj", "{F0FD061A-661E-4FCA-A896-3AD438680FA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{717148BC-ED08-4A11-B369-410B21937921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717148BC-ED08-4A11-B369-410B21937921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717148BC-ED08-4A11-B369-410B21937921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717148BC-ED08-4A11-B369-410B21937921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal
