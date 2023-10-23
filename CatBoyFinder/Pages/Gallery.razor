@@ -5,10 +5,6 @@
 
 <PageTitle>Gallery</PageTitle>
 
-<h1>Da CatBoy'z Gallery</h1>
-
-<p>Best Gallery.</p>
-
 @if (details == null)
 {
     <p>
@@ -17,14 +13,16 @@
 }
 else
 {
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+    <MudGrid Spacing="2" Justify="Justify.Center">
         @foreach (var detail in details)
-        {
-            <div style="margin: 0;">
-                <a href="@detail.FileUrl"><img src="@detail.PreviewUrl" style="max-width: 100%; height: auto;"></a>
-            </div>
-        }
-    </div>
+                {
+                    <MudItem>
+                        <MudPaper Elevation="0" Class="pa-4">
+                                <a href="@detail.FileUrl"><img src="@detail.PreviewUrl" style="height:100%; width:100%;"></a>
+                        </MudPaper>
+                    </MudItem>
+                }
+    </MudGrid>
 }
 
 @code {

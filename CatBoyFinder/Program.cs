@@ -2,6 +2,7 @@ using CatBoyCommon;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using CatBoyFinder.Data;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddMudServices();
 new CatBoyContext(builder.Configuration.GetConnectionString("DefaultConnection"));
 var app = builder.Build();
 

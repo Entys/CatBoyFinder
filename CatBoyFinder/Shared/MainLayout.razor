@@ -1,19 +1,43 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>CatBoyFinder</PageTitle>
+<MudThemeProvider Theme="_currentTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
+<MudLayout>
+    <MudAppBar>
+        <MudText Typo="Typo.h4" >CatBoy Finder</MudText>
+    </MudAppBar>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+@code {
+    private MudTheme _currentTheme = GenerateDarkTheme();
+    bool _drawerOpen = false;
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    static MudTheme GenerateDarkTheme() =>
+        new MudTheme
+        {
+            Palette = new Palette()
+            {
+                Black = "#27272f",
+                Background = "#32333d",
+                BackgroundGrey = "#27272f",
+                Surface = "#373740",
+                TextPrimary = "#ffffffb3",
+                TextSecondary = "rgba(255,255,255, 0.50)",
+                AppbarBackground = "#27272f",
+                AppbarText = "#ffffffb3",
+                DrawerBackground = "#27272f",
+                DrawerText = "#ffffffb3",
+                DrawerIcon = "#ffffffb3"
+            }
+        };
+}
+}
