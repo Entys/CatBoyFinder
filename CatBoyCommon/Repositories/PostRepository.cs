@@ -9,6 +9,7 @@ public class PostRepository : IRepository<Post>
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("INSERT INTO post (id, rating, score, source, created_at) VALUES ($1, $2, $3, $4, $5)", conn))
             {
                 cmd.Parameters.AddWithValue(obj.PostId);
@@ -32,6 +33,7 @@ public class PostRepository : IRepository<Post>
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("UPDATE post SET (rating, score, source, created_at) = ($1, $2, $3, $4) WHERE id = $5", conn))
             {
                 cmd.Parameters.AddWithValue(obj.Rating);
@@ -45,13 +47,14 @@ public class PostRepository : IRepository<Post>
         return true;
     }
 
-    public bool Delete(Post obj)
+    public bool Delete(int id)
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("DELETE FROM post WHERE id = $1);", conn))
             {
-                cmd.Parameters.AddWithValue(obj.PostId);
+                cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -61,18 +64,21 @@ public class PostRepository : IRepository<Post>
     public IEnumerable<Post> GetAll()
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM post", CatBoyContext.instance.GetConnection()))
-        using (var reader = cmd.ExecuteReader())
         {
-            while (reader.Read())
+            cmd.Connection.Open();
+            using (var reader = cmd.ExecuteReader())
             {
-                yield return new Post()
+                while (reader.Read())
                 {
-                    PostId = reader.GetInt32(0),
-                    Rating = reader.GetInt32(1),
-                    Score = reader.GetInt32(2),
-                    Source = reader.GetString(3),
-                    CreatedAt = reader.GetDateTime(4)
-                };
+                    yield return new Post()
+                    {
+                        PostId = reader.GetInt32(0),
+                        Rating = reader.GetInt32(1),
+                        Score = reader.GetInt32(2),
+                        Source = reader.GetString(3),
+                        CreatedAt = reader.GetDateTime(4)
+                    };
+                }
             }
         }
     }
@@ -81,6 +87,7 @@ public class PostRepository : IRepository<Post>
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM post WHERE id = $1", CatBoyContext.instance.GetConnection()))
         {
+            cmd.Connection.Open();
             cmd.Parameters.AddWithValue(id);
             using (var reader = cmd.ExecuteReader())
             {

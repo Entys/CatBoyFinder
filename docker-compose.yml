@@ -1,0 +1,58 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    container_name: catboy_db
+    user: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://db:5432/ -user=postgres -password=postgres -connectRetries=60 migrate
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
+  catboy_finder:
+    container_name: CatBoyFinder
+    build:
+      context: .               
+      dockerfile: Dockerfile.CatBoyFinder
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      db:
+        condition: service_healthy
+      flyway:
+        condition: service_completed_successfully # wait for flyway to finish
+    ports:
+      - "8080:8080"
+    links:
+      - db
+  catboy_scrapper:
+    container_name: CatBoyScrapperr
+    build:
+      context: .
+      dockerfile: Dockerfile.CatBoyScrapper
+    depends_on:
+      db:
+        condition: service_healthy
+      flyway:
+        condition: service_completed_successfully # wait for flyway to finish
+    links:
+      - db
+volumes:
+  db:
+    driver: local

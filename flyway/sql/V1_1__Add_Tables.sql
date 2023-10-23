@@ -13,7 +13,6 @@ CREATE TABLE post_tag (
     id int PRIMARY KEY,
     post_id int NOT NULL,
     tag_id int NOT NULL,
-    PRIMARY KEY (id, post_id, tag_id),
     FOREIGN KEY (post_id) REFERENCES post(id),
     FOREIGN KEY (tag_id) REFERENCES tag(id));
 

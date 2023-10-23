@@ -7,14 +7,20 @@ public class PostTagRepository : IRepository<PostTag>
 {
     public bool Add(ref PostTag obj)
     {
-        //TODO: Change id
         using (var conn = CatBoyContext.instance.GetConnection())
         {
-            using (var cmd = new NpgsqlCommand("INSERT INTO post_tag (post_id, tag_id) VALUES ($1, $2)", conn))
+            conn.Open();
+            using (var cmd = new NpgsqlCommand("INSERT INTO post_tag (post_id, tag_id) VALUES ($1, $2) RETURNING id;", conn))
             {
                 cmd.Parameters.AddWithValue(obj.PostId);
                 cmd.Parameters.AddWithValue(obj.TagId);
-                cmd.ExecuteNonQuery();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        obj.Id = reader.GetInt32(0);
+                    }
+                }
             }
         }
         return true;
@@ -30,6 +36,7 @@ public class PostTagRepository : IRepository<PostTag>
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("UPDATE post_tag SET (post_id, tag_id) = ($1, $2) WHERE id = $3", conn))
             {
                 cmd.Parameters.AddWithValue(obj.PostId);
@@ -41,13 +48,14 @@ public class PostTagRepository : IRepository<PostTag>
         return true;
     }
 
-    public bool Delete(PostTag obj)
+    public bool Delete(int id)
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("DELETE FROM post_tag WHERE id = $1);", conn))
             {
-                cmd.Parameters.AddWithValue(obj.Id);
+                cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -57,16 +65,19 @@ public class PostTagRepository : IRepository<PostTag>
     public IEnumerable<PostTag> GetAll()
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM post_tag", CatBoyContext.instance.GetConnection()))
-        using (var reader = cmd.ExecuteReader())
         {
-            while (reader.Read())
+            cmd.Connection.Open();
+            using (var reader = cmd.ExecuteReader())
             {
-                yield return new PostTag()
+                while (reader.Read())
                 {
-                    Id = reader.GetInt32(0),
-                    PostId = reader.GetInt32(1),
-                    TagId = reader.GetInt32(2)
-                };
+                    yield return new PostTag()
+                    {
+                        Id = reader.GetInt32(0),
+                        PostId = reader.GetInt32(1),
+                        TagId = reader.GetInt32(2)
+                    };
+                }
             }
         }
     }
@@ -75,6 +86,7 @@ public class PostTagRepository : IRepository<PostTag>
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM post_tag WHERE id = $1", CatBoyContext.instance.GetConnection()))
         {
+            cmd.Connection.Open();
             cmd.Parameters.AddWithValue(id);
             using (var reader = cmd.ExecuteReader())
             {

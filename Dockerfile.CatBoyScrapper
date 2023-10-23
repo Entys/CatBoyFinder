@@ -1,0 +1,20 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY [".", "CatBoyFinder/"]
+RUN dotnet restore "CatBoyFinder/CatBoyScrapper/CatBoyScrapper.csproj"
+COPY . .
+WORKDIR "/src/CatBoyFinder/CatBoyScrapper"
+RUN dotnet build "CatBoyScrapper.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "CatBoyScrapper.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "CatBoyFinder.dll"]

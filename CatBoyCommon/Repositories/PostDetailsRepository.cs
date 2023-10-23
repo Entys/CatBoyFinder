@@ -9,6 +9,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("INSERT INTO post_detail (post_id, preview_url, file_url) VALUES ($1, $2, $3)", conn))
             {
                 cmd.Parameters.AddWithValue(obj.PostId);
@@ -30,6 +31,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("UPDATE post_detail SET (preview_url, file_url) = ($1, $2) WHERE post_id = $3", conn))
             {
                 cmd.Parameters.AddWithValue(obj.PreviewUrl);
@@ -41,13 +43,14 @@ public class PostDetailsRepository : IRepository<PostDetails>
         return true;
     }
 
-    public bool Delete(PostDetails obj)
+    public bool Delete(int id)
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("DELETE FROM post_detail WHERE post_id = $1);", conn))
             {
-                cmd.Parameters.AddWithValue(obj.PostId);
+                cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -57,16 +60,19 @@ public class PostDetailsRepository : IRepository<PostDetails>
     public IEnumerable<PostDetails> GetAll()
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM post_detail", CatBoyContext.instance.GetConnection()))
-        using (var reader = cmd.ExecuteReader())
         {
-            while (reader.Read())
+            cmd.Connection.Open();
+            using (var reader = cmd.ExecuteReader())
             {
-                yield return new PostDetails()
+                while (reader.Read())
                 {
-                    PostId = reader.GetInt32(0),
-                    PreviewUrl = reader.GetString(1),
-                    FileUrl = reader.GetString(2),
-                };
+                    yield return new PostDetails()
+                    {
+                        PostId = reader.GetInt32(0),
+                        PreviewUrl = reader.GetString(1),
+                        FileUrl = reader.GetString(2),
+                    };
+                }
             }
         }
     }
@@ -75,6 +81,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM post_detail WHERE post_id = $1", CatBoyContext.instance.GetConnection()))
         {
+            cmd.Connection.Open();
             cmd.Parameters.AddWithValue(id);
             using (var reader = cmd.ExecuteReader())
             {

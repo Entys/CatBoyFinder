@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CatBoyCommon;
 using CatBoyCommon.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,32 +17,35 @@ namespace CatBoyFinder.Controllers
         [HttpGet]
         public IEnumerable<PostTag> Get()
         {
-            return new PostTag[] { new PostTag() };
+            return CatBoyContext.instance.PostTags.GetAll();
         }
 
         // GET: api/Tag/5
         [HttpGet("{id}", Name = "GetTag")]
         public PostTag Get(int id)
         {
-            return new PostTag();
+            return CatBoyContext.instance.PostTags.GetById(id);
         }
 
         // POST: api/Tag
         [HttpPost]
         public void Post([FromBody] PostTag value)
         {
+            CatBoyContext.instance.PostTags.Add(ref value);
         }
 
         // PUT: api/Tag/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] PostTag value)
         {
+            CatBoyContext.instance.PostTags.Update(value);
         }
 
         // DELETE: api/Tag/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            CatBoyContext.instance.PostTags.Delete(id);
         }
     }
 }

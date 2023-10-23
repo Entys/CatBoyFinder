@@ -7,13 +7,19 @@ public class TagRepository : IRepository<Tag>
 {
     public bool Add(ref Tag obj)
     {
-        //TODO: Change id
         using (var conn = CatBoyContext.instance.GetConnection())
         {
-            using (var cmd = new NpgsqlCommand("INSERT INTO tag (name) VALUES ($1)", conn))
+            conn.Open();
+            using (var cmd = new NpgsqlCommand("INSERT INTO tag (name) VALUES ($1) RETURNING id;", conn))
             {
                 cmd.Parameters.AddWithValue(obj.Name);
-                cmd.ExecuteNonQuery();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        obj.Id = reader.GetInt32(0);
+                    }
+                }
             }
         }
         return true;
@@ -29,6 +35,7 @@ public class TagRepository : IRepository<Tag>
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("UPDATE tag SET (name) = ($1) WHERE id = $2", conn))
             {
                 cmd.Parameters.AddWithValue(obj.Name);
@@ -39,13 +46,14 @@ public class TagRepository : IRepository<Tag>
         return true;
     }
 
-    public bool Delete(Tag obj)
+    public bool Delete(int id)
     {
         using (var conn = CatBoyContext.instance.GetConnection())
         {
+            conn.Open();
             using (var cmd = new NpgsqlCommand("DELETE FROM tag WHERE id = $1);", conn))
             {
-                cmd.Parameters.AddWithValue(obj.Id);
+                cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -55,15 +63,18 @@ public class TagRepository : IRepository<Tag>
     public IEnumerable<Tag> GetAll()
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM tag", CatBoyContext.instance.GetConnection()))
-        using (var reader = cmd.ExecuteReader())
         {
-            while (reader.Read())
+            cmd.Connection.Open();
+            using (var reader = cmd.ExecuteReader())
             {
-                yield return new Tag()
+                while (reader.Read())
                 {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1)
-                };
+                    yield return new Tag()
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1)
+                    };
+                }
             }
         }
     }
@@ -72,6 +83,7 @@ public class TagRepository : IRepository<Tag>
     {
         using (var cmd = new NpgsqlCommand("SELECT * FROM tag WHERE id = $1", CatBoyContext.instance.GetConnection()))
         {
+            cmd.Connection.Open();
             cmd.Parameters.AddWithValue(id);
             using (var reader = cmd.ExecuteReader())
             {
