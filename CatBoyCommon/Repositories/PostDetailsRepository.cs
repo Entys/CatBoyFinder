@@ -77,7 +77,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
                     };
                 }
             }
-            cmd.Connection.Open();
+            cmd.Connection.Close();
         }
     }
 

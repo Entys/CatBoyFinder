@@ -1,0 +1,45 @@
+﻿@page "/gallery"
+@using CatBoyFinder.Data
+@using CatBoyCommon.Models
+@using CatBoyCommon
+
+<PageTitle>Gallery</PageTitle>
+
+<h1>Da CatBoy'z Gallery</h1>
+
+<p>Best Gallery.</p>
+
+@if (details == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var detail in details)
+        {
+            <tr>
+                <td><a href="@detail.FileUrl"><img src="@detail.PreviewUrl" class="preview"></a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private PostDetails[]? details;
+
+    protected override async Task OnInitializedAsync()
+    {
+        details = CatBoyContext.instance.PostDetails.GetAll().ToArray();
+    }
+
+}

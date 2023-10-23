@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyScrapper", "CatBoyScr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyCommon", "CatBoyCommon\CatBoyCommon.csproj", "{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyFinder", "CatBoyFinder\CatBoyFinder.csproj", "{F0FD061A-661E-4FCA-A896-3AD438680FA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatBoyFinder", "CatBoyFinder\CatBoyFinder.csproj", "{78126B26-3D3B-4979-8B62-412A0E15F81E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +20,10 @@ Global
 		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E40863D-9BFA-48FC-8FE6-DBD016E1535F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0FD061A-661E-4FCA-A896-3AD438680FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78126B26-3D3B-4979-8B62-412A0E15F81E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78126B26-3D3B-4979-8B62-412A0E15F81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78126B26-3D3B-4979-8B62-412A0E15F81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78126B26-3D3B-4979-8B62-412A0E15F81E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

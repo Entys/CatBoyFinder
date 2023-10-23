@@ -27,8 +27,16 @@ internal class Program
                 CreatedAt = result.Creation ?? DateTime.Now
             };
 
+            var detail = new PostDetails
+            {
+                PostId = result.ID,
+                PreviewUrl = result.PreviewUrl.AbsoluteUri,
+                FileUrl = result.FileUrl.AbsoluteUri
+            };
+
 
             CatBoyContext.instance.Posts.Add(ref post);
+            CatBoyContext.instance.PostDetails.Add(ref detail);
 
             foreach (var tag in result.Tags)
             {

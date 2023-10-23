@@ -42,7 +42,7 @@ services:
     links:
       - db
   catboy_scrapper:
-    container_name: CatBoyScrapperr
+    container_name: CatBoyScrapper
     build:
       context: .
       dockerfile: Dockerfile.CatBoyScrapper
