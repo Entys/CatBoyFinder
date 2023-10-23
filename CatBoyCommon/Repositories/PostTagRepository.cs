@@ -22,6 +22,7 @@ public class PostTagRepository : IRepository<PostTag>
                     }
                 }
             }
+            conn.Close();
         }
         return true;
     }
@@ -44,6 +45,7 @@ public class PostTagRepository : IRepository<PostTag>
                 cmd.Parameters.AddWithValue(obj.Id);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -58,6 +60,7 @@ public class PostTagRepository : IRepository<PostTag>
                 cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -79,6 +82,7 @@ public class PostTagRepository : IRepository<PostTag>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
     }
 
@@ -100,6 +104,7 @@ public class PostTagRepository : IRepository<PostTag>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
         return null;
     }

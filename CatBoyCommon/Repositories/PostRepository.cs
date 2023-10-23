@@ -19,6 +19,7 @@ public class PostRepository : IRepository<Post>
                 cmd.Parameters.AddWithValue(obj.CreatedAt);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -43,6 +44,7 @@ public class PostRepository : IRepository<Post>
                 cmd.Parameters.AddWithValue(obj.PostId);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -57,6 +59,7 @@ public class PostRepository : IRepository<Post>
                 cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -80,6 +83,7 @@ public class PostRepository : IRepository<Post>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
     }
 
@@ -103,6 +107,7 @@ public class PostRepository : IRepository<Post>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
         return null;
     }

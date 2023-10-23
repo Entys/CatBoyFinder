@@ -10,7 +10,7 @@ CREATE TABLE tag (
     name varchar(100) NOT NULL);
 
 CREATE TABLE post_tag (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     post_id int NOT NULL,
     tag_id int NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id),

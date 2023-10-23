@@ -17,6 +17,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
                 cmd.Parameters.AddWithValue(obj.FileUrl);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -39,6 +40,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
                 cmd.Parameters.AddWithValue(obj.PostId);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -53,6 +55,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
                 cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -74,6 +77,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
                     };
                 }
             }
+            cmd.Connection.Open();
         }
     }
 
@@ -95,6 +99,7 @@ public class PostDetailsRepository : IRepository<PostDetails>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
         return null;
     }

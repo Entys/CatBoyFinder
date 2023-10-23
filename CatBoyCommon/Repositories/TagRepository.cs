@@ -21,6 +21,7 @@ public class TagRepository : IRepository<Tag>
                     }
                 }
             }
+            conn.Close();
         }
         return true;
     }
@@ -42,6 +43,7 @@ public class TagRepository : IRepository<Tag>
                 cmd.Parameters.AddWithValue(obj.Id);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -56,6 +58,7 @@ public class TagRepository : IRepository<Tag>
                 cmd.Parameters.AddWithValue(id);
                 cmd.ExecuteNonQuery();
             }
+            conn.Close();
         }
         return true;
     }
@@ -76,6 +79,7 @@ public class TagRepository : IRepository<Tag>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
     }
 
@@ -96,6 +100,7 @@ public class TagRepository : IRepository<Tag>
                     };
                 }
             }
+            cmd.Connection.Close();
         }
         return null;
     }
