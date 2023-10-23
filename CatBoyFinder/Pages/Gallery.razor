@@ -17,21 +17,14 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-        <tr>
-            <th>URL</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
         @foreach (var detail in details)
         {
-            <tr>
-                <td><a href="@detail.FileUrl"><img src="@detail.PreviewUrl" class="preview"></a></td>
-            </tr>
+            <div style="margin: 0;">
+                <a href="@detail.FileUrl"><img src="@detail.PreviewUrl" style="max-width: 100%; height: auto;"></a>
+            </div>
         }
-        </tbody>
-    </table>
+    </div>
 }
 
 @code {
@@ -41,5 +34,4 @@ else
     {
         details = CatBoyContext.instance.PostDetails.GetAll().ToArray();
     }
-
 }
