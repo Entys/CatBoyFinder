@@ -38,6 +38,7 @@ namespace CatBoyFinder.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] PostDetails value)
         {
+            value.PostId = id;
             CatBoyContext.instance.PostDetails.Update(value);
         }
 
