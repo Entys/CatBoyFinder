@@ -12,6 +12,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 new CatBoyContext(builder.Configuration.GetConnectionString("DefaultConnection"));
 var app = builder.Build();
 
@@ -23,14 +25,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.MapBlazorHub();
 app.MapControllers();
+app.MapSwagger();
 app.MapFallbackToPage("/_Host");
-
 app.Run();
