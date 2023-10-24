@@ -14,7 +14,7 @@ internal class Program
         }
 
         var booru = new BooruSharp.Booru.Safebooru();
-        for (int i = 0; i <= 100; i++)
+        for (int i = 0; i <= 350; i++)
         {
             var result = booru.GetRandomPostAsync("catboy").Result;
             if (CatBoyContext.instance.Posts.GetAll().Any(post => post.PostId == result.ID)) continue;
